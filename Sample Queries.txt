@@ -47,3 +47,38 @@ SELECT id, AsText(geometry) FROM my_points;
 CREATE VIRTUAL TABLE my_points_h3_index USING hash_index(my_points, geometry, 7);
 
 SELECT rowid, h3 FROM my_points_h3_index WHERE h3 = (SELECT geoToH3(20, 10, 7));
+
+------------------------------ SQLite Query Functions --------------------------------------------------------------
+
+SELECT geoToH3(48.8584, 2.2945, 7);
+SELECT h3ToString(geoToH3(48.8584, 2.2945, 7));
+
+SELECT h3Parent(geoToH3(48.8584, 2.2945, 7));
+SELECT h3Parent(geoToH3(48.8584, 2.2945, 7), 3);
+
+SELECT h3Neighbors(geoToH3(48.8584, 2.2945, 7));
+SELECT h3Distance(geoToH3(48.8584, 2.2945, 7), 608543704734498815);
+SELECT h3Distance(geoToH3(48.8584, 2.2945, 7), 608543708626812927);
+
+SELECT geoDistanceM(48.8584, 2.2945, 48.8584, 2.5);
+
+
+---------------------------------- PARIS ILE DE FRANCE DB -----------------------------------------------------------
+
+.open ile-de-france.db
+.load my_h3_extension
+.load mod_spatialite
+
+CREATE VIRTUAL TABLE my_points_h3_index9 USING hash_index(points, geometry, 9);
+
+SELECT COUNT(*) FROM h3_index_points_geometry_9;
+
+SELECT * FROM h3_index_points_geometry_9 LIMIT 1;
+
+SELECT h3, rowid FROM my_points_h3_index WHERE h3 = (SELECT geoToH3(48.8584, 2.2945, 7)) LIMIT 5;
+
+SELECT rowid, name FROM points WHERE rowid IN (SELECT rowid FROM my_points_h3_index9 WHERE h3 = geoToH3(48.8584, 2.2945, 9)) AND other_tags LIKE '%"amenity"=>"cafe"%';
+
+SELECT rowid, name FROM points WHERE rowid IN (SELECT rowid FROM my_points_h3_index9 WHERE h3 = h3Neighbors(geoToH3(48.8584, 2.2945, 9), 2)) AND other_tags LIKE '%"amenity"=>"cafe"%';
+
+
