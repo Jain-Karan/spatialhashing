@@ -76,6 +76,7 @@ This project implements a spatial hashing index using SQLite and H3 to optimize 
 ## Troubleshooting
 - **Error: SQLite extension not found**:  
   Ensure that the `my_h3_extension.dll` file is in the same folder as the SQLite database (`ile-de-france.db`).
+  Ensure SYSTEM PATH contains path to OSGeo4W bin (default location: C:\OSGeo4W\bin)
 
 - **Error: Missing Python libraries**:  
   Double-check the `requirements.txt` and ensure all dependencies are installed.
