@@ -1,0 +1,49 @@
+.load my_h3_extension
+.load mod_spatialite
+
+SELECT InitSpatialMetadata();
+
+CREATE TABLE my_points (
+    id INTEGER PRIMARY KEY,
+    geometry GEOMETRY
+);
+
+SELECT AddGeometryColumn('my_points', 'geometry', 4326, 'POINT', 'XY');
+
+INSERT INTO my_points (geometry) VALUES
+(ST_GeomFromText('POINT(10 20)', 4326)),
+(ST_GeomFromText('POINT(11 21)', 4326)),
+(ST_GeomFromText('POINT(12 22)', 4326)),
+(ST_GeomFromText('POINT(13 23)', 4326)),
+(ST_GeomFromText('POINT(14 24)', 4326)),
+(ST_GeomFromText('POINT(15 25)', 4326)),
+(ST_GeomFromText('POINT(16 26)', 4326)),
+(ST_GeomFromText('POINT(17 27)', 4326)),
+(ST_GeomFromText('POINT(18 28)', 4326)),
+(ST_GeomFromText('POINT(19 29)', 4326)),
+(ST_GeomFromText('POINT(10 20)', 4326)),
+(ST_GeomFromText('POINT(11 21)', 4326)),
+(ST_GeomFromText('POINT(12 22)', 4326)),
+(ST_GeomFromText('POINT(13 23)', 4326)),
+(ST_GeomFromText('POINT(14 24)', 4326)),
+(ST_GeomFromText('POINT(15 25)', 4326)),
+(ST_GeomFromText('POINT(16 26)', 4326)),
+(ST_GeomFromText('POINT(17 27)', 4326)),
+(ST_GeomFromText('POINT(18 28)', 4326)),
+(ST_GeomFromText('POINT(19 29)', 4326)),
+(ST_GeomFromText('POINT(10 20)', 4326)),
+(ST_GeomFromText('POINT(11 21)', 4326)),
+(ST_GeomFromText('POINT(12 22)', 4326)),
+(ST_GeomFromText('POINT(13 23)', 4326)),
+(ST_GeomFromText('POINT(14 24)', 4326)),
+(ST_GeomFromText('POINT(15 25)', 4326)),
+(ST_GeomFromText('POINT(16 26)', 4326)),
+(ST_GeomFromText('POINT(17 27)', 4326)),
+(ST_GeomFromText('POINT(18 28)', 4326)),
+(ST_GeomFromText('POINT(19 29)', 4326));
+
+SELECT id, AsText(geometry) FROM my_points;
+
+CREATE VIRTUAL TABLE my_points_h3_index USING hash_index(my_points, geometry, 7);
+
+SELECT rowid, h3 FROM my_points_h3_index WHERE h3 = (SELECT geoToH3(20, 10, 7));
