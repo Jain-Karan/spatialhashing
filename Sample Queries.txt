@@ -75,7 +75,7 @@ SELECT COUNT(*) FROM h3_index_points_geometry_9;
 
 SELECT * FROM h3_index_points_geometry_9 LIMIT 1;
 
-SELECT h3, rowid FROM my_points_h3_index WHERE h3 = (SELECT geoToH3(48.8584, 2.2945, 7)) LIMIT 5;
+SELECT h3, rowid FROM my_points_h3_index9 WHERE h3 = (SELECT geoToH3(48.8584, 2.2945, 9)) LIMIT 5;
 
 SELECT rowid, name FROM points WHERE rowid IN (SELECT rowid FROM my_points_h3_index9 WHERE h3 = geoToH3(48.8584, 2.2945, 9)) AND other_tags LIKE '%"amenity"=>"cafe"%';
 
