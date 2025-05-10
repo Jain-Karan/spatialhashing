@@ -3,7 +3,7 @@
 
 ## Contributors
 - **Aditya Patel**(aditya.s.patel@sjsu.edu): H3 API binding, Virtual Table Module, SQLite extension implementation  
-- **Karan Jain**(karan.jain@sjsu.edu): Architecture Design, Virtual Table Module, GUI Application
+- **Karan Jain**(karan.jain@sjsu.edu): Architecture Design and Implementation, Virtual Table Module, GUI Application
 
 ## Overview
 This project implements a spatial hashing index using SQLite and H3 to optimize spatial queries. It involves integrating the H3 API with SQLite through a custom virtual table extension, allowing users to efficiently query geospatial data. A Python-based application is provided to interact with the database and visualize results.
